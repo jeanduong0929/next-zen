@@ -6,6 +6,7 @@ interface FormInputProps {
   type?: string;
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: string;
 }
 

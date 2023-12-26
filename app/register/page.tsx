@@ -4,9 +4,8 @@ import React from "react";
 import Link from "next/link";
 import FormInput from "@/components/form-input";
 import FormButton from "@/components/form-button";
-import NextAuthButton from "@/components/next-auth-button";
 import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon, CommandIcon } from "lucide-react";
+import { CommandIcon } from "lucide-react";
 
 const RegisterPage = () => {
   return (
@@ -44,8 +43,49 @@ const RegisterNavbar = () => {
 };
 
 const RegisterForm = () => {
+  // Form states
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+
+  // Error states
+  const [emailError, setEmailError] = React.useState<string>("");
+  const [passwordError, setPasswordError] = React.useState<string>("");
+
+  const isValidEmail = (email: string) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  };
+
+  const isValidPassword = (password: string) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/.test(
+      password
+    );
+  };
+
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+
+    if (!e.target.value.trim()) {
+      setEmailError("Email is required");
+    } else if (!isValidEmail(e.target.value)) {
+      setEmailError("Email is invalid");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+
+    if (!e.target.value.trim()) {
+      setPasswordError("Password is required");
+    } else if (!isValidPassword(e.target.value)) {
+      setPasswordError(
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
+    } else {
+      setPasswordError("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,14 +100,18 @@ const RegisterForm = () => {
         <FormInput
           type="email"
           placeholder="name@example.com"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmail}
+          onBlur={handleEmail}
+          error={emailError}
         />
 
         {/* Password */}
         <FormInput
           type="password"
           placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePassword}
+          onBlur={handlePassword}
+          error={passwordError}
         />
 
         {/* Submit */}
