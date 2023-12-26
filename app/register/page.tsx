@@ -7,6 +7,8 @@ import FormButton from "@/components/form-button";
 import instance from "@/lib/axios-config";
 import { Button } from "@/components/ui/button";
 import { CommandIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const RegisterPage = () => {
   return (
@@ -55,6 +57,10 @@ const RegisterForm = () => {
   // Loading state
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  // Custom hook
+  const router = useRouter();
+  const { toast } = useToast();
+
   const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
@@ -100,8 +106,18 @@ const RegisterForm = () => {
         email,
         password,
       });
+
+      toast({
+        title: "Account created",
+        className: "bg-slate-900 text-white",
+      });
+
+      router.push("/login");
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
+      if (error.response && error.response.status === 409) {
+        setEmailError("Email is already taken");
+      }
     } finally {
       setLoading(false);
     }

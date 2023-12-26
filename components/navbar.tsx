@@ -11,7 +11,7 @@ const Navbar = () => {
         <ul className="flex items-center gap-5">
           <Link href={"/"} className="flex items-center">
             <CommandIcon size={24} className="mr-2" />
-            <h1 className="font-bold text-xl">Zen</h1>
+            <h1 className="font-bold text-xl">ZEN</h1>
           </Link>
         </ul>
 

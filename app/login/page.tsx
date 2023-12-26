@@ -18,7 +18,7 @@ const LoginPage = () => {
         {/* Header */}
         <div className="flex flex-col items-center justify-center gap-2">
           <CommandIcon size={24} />
-          <h1 className="font-bold text-2xl">Zen</h1>
+          <h1 className="font-bold text-2xl">ZEN</h1>
           <p className="text-slate-500 text-sm">
             Enter your email to sign in to your account
           </p>

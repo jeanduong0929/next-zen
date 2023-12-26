@@ -1,6 +1,6 @@
-import UserEntity from "@/entitties/user-entitiy";
-import connectDB from "@/lib/db";
 import bcrypt from "bcrypt";
+import connectDB from "@/lib/db";
+import UserEntity from "@/entitties/user-entitiy";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
