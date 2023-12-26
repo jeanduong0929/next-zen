@@ -2,11 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
+import Loadingpage from "./loading";
 import { Button } from "./ui/button";
-import { CommandIcon, LayoutIcon, LogOutIcon } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Session } from "next-auth";
+import { signOut, useSession } from "next-auth/react";
+import { CommandIcon, LayoutIcon, LogOutIcon } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,8 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { set } from "mongoose";
-import Loadingpage from "./loading";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
