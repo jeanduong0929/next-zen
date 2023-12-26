@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/footer";
+import Session from "@/contexts/session-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
-          <main className="flex-grow">{children}</main>
-          <Footer />
-          <Toaster />
-        </div>
+        <Session>
+          <div className="flex flex-col min-h-screen">
+            <main className="flex-grow">{children}</main>
+            <Footer />
+            <Toaster />
+          </div>
+        </Session>
       </body>
     </html>
   );
