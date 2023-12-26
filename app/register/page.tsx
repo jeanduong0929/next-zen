@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import FormInput from "@/components/form-input";
 import FormButton from "@/components/form-button";
+import instance from "@/lib/axios-config";
 import { Button } from "@/components/ui/button";
 import { CommandIcon } from "lucide-react";
 
@@ -51,6 +52,9 @@ const RegisterForm = () => {
   const [emailError, setEmailError] = React.useState<string>("");
   const [passwordError, setPasswordError] = React.useState<string>("");
 
+  // Loading state
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
@@ -89,8 +93,18 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
-    console.log("Submitted!");
+    try {
+      await instance.post("/auth/register", {
+        email,
+        password,
+      });
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
