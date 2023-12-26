@@ -8,45 +8,42 @@ import NextAuthButton from "@/components/next-auth-button";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, CommandIcon } from "lucide-react";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <>
       {/* Navbar */}
-      <LoginNavbar />
+      <RegisterNavbar />
 
       <div className="flex flex-col items-center justify-center max-w-screen-lg w-11/12 mx-auto h-screen gap-5">
         {/* Header */}
         <div className="flex flex-col items-center justify-center gap-2">
           <CommandIcon size={24} />
-          <h1 className="font-bold text-2xl">Zen</h1>
+          <h1 className="font-bold text-2xl">Create an account</h1>
           <p className="text-slate-500 text-sm">
-            Enter your email to sign in to your account
+            Enter your email below to create your account
           </p>
         </div>
 
         {/* Form */}
-        <LoginForm />
+        <RegisterForm />
       </div>
     </>
   );
 };
 
-const LoginNavbar = () => {
+const RegisterNavbar = () => {
   return (
     <>
-      <nav className="absolute max-w-screen-lg w-11/12 mx-auto inset-x-0 py-5">
-        <Link href={"/"}>
-          <Button variant={"ghost"}>
-            <ChevronLeftIcon className="h-4 w-4 mr-2" />
-            Back
-          </Button>
+      <nav className="absolute flex justify-end max-w-screen-lg w-11/12 mx-auto inset-x-0 py-5">
+        <Link href={"/login"}>
+          <Button variant={"ghost"}>Login</Button>
         </Link>
       </nav>
     </>
   );
 };
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
@@ -74,25 +71,16 @@ const LoginForm = () => {
         />
 
         {/* Submit */}
-        <FormButton type={"submit"}>Sign In with Email</FormButton>
-
-        {/* Divider */}
-        <div className="flex items-center gap-2">
-          <hr className="w-full" />
-          <p>OR</p>
-          <hr className="w-full" />
-        </div>
-
-        {/* NextAuth */}
-        <NextAuthButton />
+        <FormButton type={"submit"}>Sign Up with Email</FormButton>
 
         {/* Footer */}
-        <footer className="underline underline-offset-4 text-center">
-          <Link href={"/register"}>Don&apos;t have an account? Sign Up</Link>
+        <footer className="text-center">
+          By clicking continue, you agree to our Terms of Service and Privacy
+          Policy.
         </footer>
       </form>
     </>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
