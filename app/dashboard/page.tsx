@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
@@ -10,6 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import FormButton from "@/components/form-button";
+import { TrashIcon } from "lucide-react";
 
 const DashboardPage = () => {
   const notes: Note[] = [
@@ -57,6 +71,10 @@ interface NoteItemProps {
 }
 
 const NoteItem = ({ note }: NoteItemProps) => {
+  const [dialog, setDialog] = React.useState<boolean>(false);
+
+  console.log(dialog);
+
   return (
     <>
       <div className="flex items-center justify-between border w-full px-5 py-5">
@@ -70,12 +88,51 @@ const NoteItem = ({ note }: NoteItemProps) => {
           <DropdownMenuContent>
             <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-500">
+            <DropdownMenuItem
+              className="cursor-pointer text-red-500"
+              onClick={() => setDialog(true)}
+            >
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      <NoteItemDialog dialog={dialog} setDialog={setDialog} />
+    </>
+  );
+};
+
+interface NoteItemDialogProps {
+  dialog: boolean;
+  setDialog: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NoteItemDialog = ({ dialog, setDialog }: NoteItemDialogProps) => {
+  return (
+    <>
+      {dialog && (
+        <div className="fixed flex items-center justify-center inset-0 backdrop-blur-sm" />
+      )}
+      <Dialog open={dialog} onOpenChange={() => setDialog(false)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure you want to delete this post?
+            </DialogTitle>
+            <DialogDescription>This action cannot be undone.</DialogDescription>
+            <DialogFooter>
+              <FormButton type="button" onClick={() => setDialog(false)}>
+                Cancel
+              </FormButton>
+              <FormButton type="submit" variant={"destructive"}>
+                <TrashIcon className="w-4 h-4 mr-2" />
+                Delete
+              </FormButton>
+            </DialogFooter>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

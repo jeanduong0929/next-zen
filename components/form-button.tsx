@@ -6,6 +6,7 @@ interface FormButtonProps {
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  variant?: "default" | "destructive" | "ghost" | "secondary" | "link";
 }
 
 const FormButton = ({ className, children, ...props }: FormButtonProps) => {
