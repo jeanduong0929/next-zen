@@ -1,4 +1,6 @@
+import UserEntity from "@/entitties/user-entitiy";
 import connectDB from "@/lib/db";
+import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -14,6 +16,20 @@ export const POST = async (req: NextRequest) => {
     ) {
       return NextResponse.json({}, { status: 400 });
     }
+
+    if (await UserEntity.findOne({ email })) {
+      return NextResponse.json({}, { status: 409 });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await UserEntity.create({
+      email,
+      password: hashedPassword,
+    });
+
+    return NextResponse.json({}, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({}, { status: 500 });
   }
