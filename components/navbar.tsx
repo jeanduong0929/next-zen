@@ -6,8 +6,14 @@ import Loadingpage from "./loading";
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
-import { CommandIcon, LayoutIcon, LogOutIcon } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  CommandIcon,
+  LayoutIcon,
+  LogOutIcon,
+  Settings,
+  UserIcon,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -67,19 +73,20 @@ const UserAvatar = ({ session }: UserAvatarProps) => {
     }
   };
 
-  const handleSignOut = () => {
-    signOut();
-  };
-
   return (
     <>
       <DropdownMenu>
+        {/* Dropdown trigger */}
         <DropdownMenuTrigger>
           <Avatar>
+            <AvatarImage src={session.user?.image as string} />
             <AvatarFallback>{getInitials()}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
+
+        {/* Dropdown content */}
         <DropdownMenuContent>
+          {/* Dropdown user email */}
           <DropdownMenuLabel>{session.user?.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link href={"/dashboard"}>
@@ -88,8 +95,25 @@ const UserAvatar = ({ session }: UserAvatarProps) => {
               Dashboard
             </DropdownMenuItem>
           </Link>
+
+          <Link href={"/profile"}>
+            <DropdownMenuItem className=" cursor-pointer">
+              <UserIcon className="h-4 w-4 mr-2" />
+              Profile
+            </DropdownMenuItem>
+          </Link>
+
+          <Link href={"/settings"}>
+            <DropdownMenuItem className=" cursor-pointer">
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className=" cursor-pointer" onClick={handleSignOut}>
+          <DropdownMenuItem
+            className=" cursor-pointer"
+            onClick={() => signOut()}
+          >
             <LogOutIcon className="h-4 w-4 mr-2" />
             Logout
           </DropdownMenuItem>
