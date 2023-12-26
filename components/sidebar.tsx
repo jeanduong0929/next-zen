@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <nav className="flex flex-col gap-2 w-[230px]">
+      <nav className="flex flex-col gap-2 min-w-[230px] max-w-[230px]">
         <Link
           href={"/dashboard"}
           className={`flex items-center hover:bg-slate-200 px-5 py-2 rounded-md ${

@@ -4,11 +4,11 @@ import React from "react";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 import Note from "@/models/note";
+import { PlusIcon, TrashIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -19,11 +19,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import FormButton from "@/components/form-button";
-import { TrashIcon } from "lucide-react";
 
 const DashboardPage = () => {
   const notes: Note[] = [
@@ -50,9 +47,18 @@ const DashboardPage = () => {
       <div className="flex gap-10 max-w-screen-lg w-11/12 mx-auto py-5">
         <Sidebar />
         <div className="flex flex-col gap-10 w-full">
-          <div>
-            <h1 className="text-4xl font-bold">Notes</h1>
-            <h2 className="text-xl text-slate-500">Create and manage posts.</h2>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold">Notes</h1>
+              <h2 className="text-xl text-slate-500">
+                Create and manage posts.
+              </h2>
+            </div>
+
+            <FormButton>
+              <PlusIcon className="w-4 h-4 mr-2" />
+              New Note
+            </FormButton>
           </div>
 
           <div>
@@ -122,7 +128,11 @@ const NoteItemDialog = ({ dialog, setDialog }: NoteItemDialogProps) => {
             </DialogTitle>
             <DialogDescription>This action cannot be undone.</DialogDescription>
             <DialogFooter>
-              <FormButton type="button" onClick={() => setDialog(false)}>
+              <FormButton
+                type="button"
+                variant={"secondary"}
+                onClick={() => setDialog(false)}
+              >
                 Cancel
               </FormButton>
               <FormButton type="submit" variant={"destructive"}>
